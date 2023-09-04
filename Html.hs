@@ -52,3 +52,15 @@ getStructureString :: Structure -> String
 getStructureString struct =
   case struct of
     Structure str -> str
+
+escape :: [Char] -> [Char]
+escape =
+  let escapeChar c =
+        case c of
+          '<' -> "&lt;"
+          '>' -> "&gt;"
+          '&' -> "&amp;"
+          '"' -> "&quote;"
+          '\'' -> "&#39;"
+          _ -> [c]
+   in concat . map escapeChar
