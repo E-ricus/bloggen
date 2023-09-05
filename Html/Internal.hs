@@ -1,14 +1,4 @@
-module Html
-  ( Html,
-    Title,
-    Structure,
-    html_,
-    p_,
-    h1_,
-    append_,
-    render,
-  )
-where
+module Html.Internal where
 
 newtype Html
   = Html String
@@ -24,16 +14,24 @@ html_ title content =
   Html
     ( el
         "html"
-        ( el "head" (el "title" title)
+        ( el "head" (el "title" (escape title))
             <> el "body" (getStructureString content)
         )
     )
 
 p_ :: String -> Structure
-p_ = Structure . el "p"
+p_ = Structure . el "p" . escape
 
 h1_ :: String -> Structure
-h1_ = Structure . el "h1"
+h1_ = Structure . el "h1" . escape
+
+ul_ :: [Structure] -> Structure
+ul_ items =
+  Structure (el "ul" (concatMap ui_ items))
+
+ui_ :: Structure -> String
+ui_ (Structure a) =
+  el "ui_" a
 
 el :: String -> String -> String
 el tag content =
@@ -53,7 +51,7 @@ getStructureString struct =
   case struct of
     Structure str -> str
 
-escape :: [Char] -> [Char]
+escape :: String -> String
 escape =
   let escapeChar c =
         case c of
@@ -63,4 +61,4 @@ escape =
           '"' -> "&quote;"
           '\'' -> "&#39;"
           _ -> [c]
-   in concat . map escapeChar
+   in concatMap escapeChar
