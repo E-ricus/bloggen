@@ -26,12 +26,15 @@ h1_ :: String -> Structure
 h1_ = Structure . el "h1" . escape
 
 ul_ :: [Structure] -> Structure
-ul_ items =
-  Structure (el "ul" (concatMap ui_ items))
+ul_ =
+  Structure . el "ul" . concatMap (el "li" . getStructureString)
 
-ui_ :: Structure -> String
-ui_ (Structure a) =
-  el "ui_" a
+ol_ :: [Structure] -> Structure
+ol_ =
+  Structure . el "ol" . concatMap (el "li" . getStructureString)
+
+code_ :: String -> Structure
+code_ = Structure . el "pre" . escape
 
 el :: String -> String -> String
 el tag content =
