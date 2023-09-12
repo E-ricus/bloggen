@@ -40,9 +40,10 @@ el :: String -> String -> String
 el tag content =
   "<" <> tag <> ">" <> content <> "</" <> tag <> ">"
 
-append_ :: Structure -> Structure -> Structure
-append_ (Structure a) (Structure b) =
-  Structure (a <> b)
+instance Semigroup Structure where
+  (<>) :: Structure -> Structure -> Structure
+  (<>) s1 s2 =
+    Structure (getStructureString s1 <> getStructureString s2)
 
 render :: Html -> String
 render html =
