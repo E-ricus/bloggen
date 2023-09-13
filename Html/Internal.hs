@@ -1,5 +1,7 @@
 module Html.Internal where
 
+import GHC.Natural
+
 newtype Html
   = Html String
 
@@ -25,6 +27,13 @@ p_ = Structure . el "p" . escape
 h1_ :: String -> Structure
 h1_ = Structure . el "h1" . escape
 
+h_ :: Natural -> String -> Structure
+h_ n =
+  Structure . el ("h" <> show n) . escape
+
+empty_ :: Structure
+empty_ = Structure ""
+
 ul_ :: [Structure] -> Structure
 ul_ =
   Structure . el "ul" . concatMap (el "li" . getStructureString)
@@ -44,6 +53,9 @@ instance Semigroup Structure where
   (<>) :: Structure -> Structure -> Structure
   (<>) s1 s2 =
     Structure (getStructureString s1 <> getStructureString s2)
+
+instance Monoid Structure where
+  mempty = empty_
 
 render :: Html -> String
 render html =
