@@ -1,6 +1,4 @@
--- Markup.hs
-
-module Markup
+module Bloggen.Markup
   ( Document,
     Structure (..),
     parse,

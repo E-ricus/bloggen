@@ -1,4 +1,4 @@
-module Html
+module Bloggen.Html
   ( Html,
     Title,
     Structure,
@@ -13,4 +13,4 @@ module Html
   )
 where
 
-import Html.Internal
+import Bloggen.Html.Internal

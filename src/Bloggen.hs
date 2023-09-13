@@ -1,7 +1,13 @@
-import Control.Monad
-import Convert
-import Html
-import Markup
+module Bloggen
+  ( main,
+    process,
+  )
+where
+
+import Bloggen.Convert (convert)
+import qualified Bloggen.Html as Html
+import qualified Bloggen.Markup as Markup
+import Control.Monad (when)
 import System.Directory (doesFileExist)
 import System.Environment (getArgs)
 

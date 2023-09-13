@@ -1,4 +1,6 @@
-module Html.Internal where
+{-# LANGUAGE InstanceSigs #-}
+
+module Bloggen.Html.Internal where
 
 import GHC.Natural
 
